@@ -1,10 +1,45 @@
-query DeliveryInput {
+query DeliveryInput($testTags: [String!]) {
   cart {
+    buyerIdentity {
+      customer {
+        hasAnyTag(tags: $testTags)
+      }
+    }
     deliveryGroups {
       id
+      deliveryAddress {
+        countryCode
+      }
+      deliveryOptions {
+        handle
+        title
+        cost {
+          amount
+          currencyCode
+        }
+      }
+      cartLines {
+        quantity
+        merchandise {
+          __typename
+          ... on ProductVariant {
+            weight
+            weightUnit
+            requiresShipping
+          }
+          ... on CustomProduct {
+            weight
+            weightUnit
+            requiresShipping
+          }
+        }
+      }
     }
   }
   discount {
     discountClasses
+    metafield(namespace: "$app:combined-shipping", key: "config") {
+      jsonValue
+    }
   }
 }

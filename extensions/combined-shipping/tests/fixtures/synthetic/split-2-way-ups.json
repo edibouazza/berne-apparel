@@ -1,0 +1,203 @@
+{
+  "payload": {
+    "export": "cart-delivery-options-discounts-generate-run",
+    "target": "cart.delivery-options.discounts.generate.run",
+    "input": {
+      "cart": {
+        "buyerIdentity": {
+          "customer": {
+            "hasAnyTag": true
+          }
+        },
+        "deliveryGroups": [
+          {
+            "id": "gid://shopify/CartDeliveryGroup/1",
+            "deliveryAddress": {
+              "countryCode": "US"
+            },
+            "deliveryOptions": [
+              {
+                "handle": "fw-free",
+                "title": "Free Standard Shipping",
+                "cost": {
+                  "amount": "0.0",
+                  "currencyCode": "USD"
+                }
+              },
+              {
+                "handle": "fw-std",
+                "title": "Standard Shipping",
+                "cost": {
+                  "amount": "9.99",
+                  "currencyCode": "USD"
+                }
+              },
+              {
+                "handle": "fw-ups2",
+                "title": "UPS 2nd Day Air®",
+                "cost": {
+                  "amount": "25.40",
+                  "currencyCode": "USD"
+                }
+              }
+            ],
+            "cartLines": [
+              {
+                "quantity": 1,
+                "merchandise": {
+                  "__typename": "ProductVariant",
+                  "weight": 2,
+                  "weightUnit": "POUNDS",
+                  "requiresShipping": true
+                }
+              }
+            ]
+          },
+          {
+            "id": "gid://shopify/CartDeliveryGroup/2",
+            "deliveryAddress": {
+              "countryCode": "US"
+            },
+            "deliveryOptions": [
+              {
+                "handle": "os-free",
+                "title": "Free Standard Shipping",
+                "cost": {
+                  "amount": "0.0",
+                  "currencyCode": "USD"
+                }
+              },
+              {
+                "handle": "os-std",
+                "title": "Standard Shipping",
+                "cost": {
+                  "amount": "4.99",
+                  "currencyCode": "USD"
+                }
+              },
+              {
+                "handle": "os-ups2",
+                "title": "UPS 2nd Day Air®",
+                "cost": {
+                  "amount": "18.10",
+                  "currencyCode": "USD"
+                }
+              }
+            ],
+            "cartLines": [
+              {
+                "quantity": 1,
+                "merchandise": {
+                  "__typename": "ProductVariant",
+                  "weight": 0.5,
+                  "weightUnit": "POUNDS",
+                  "requiresShipping": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "discount": {
+        "discountClasses": [
+          "SHIPPING"
+        ],
+        "metafield": {
+          "jsonValue": {
+            "enabled": true,
+            "testMode": true,
+            "testTags": [
+              "combined-shipping-test"
+            ],
+            "message": "Combined shipping",
+            "currency": "USD",
+            "countries": [
+              "US"
+            ],
+            "packagingWeightLb": 0,
+            "standard": {
+              "titles": [
+                "Standard Shipping"
+              ],
+              "bands": [
+                {
+                  "maxLb": 1,
+                  "cents": 499,
+                  "maxInclusive": false
+                },
+                {
+                  "maxLb": 3,
+                  "cents": 999,
+                  "maxInclusive": true
+                },
+                {
+                  "maxLb": 5,
+                  "cents": 1199,
+                  "maxInclusive": true
+                },
+                {
+                  "maxLb": 8,
+                  "cents": 1499,
+                  "maxInclusive": true
+                },
+                {
+                  "maxLb": null,
+                  "cents": 1799
+                }
+              ]
+            },
+            "ups": {
+              "enabled": true,
+              "titles": [
+                "UPS 2nd Day Air®",
+                "UPS 3 Day Select®",
+                "UPS Next Day Air®"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "operations": [
+        {
+          "deliveryDiscountsAdd": {
+            "candidates": [
+              {
+                "message": "Combined shipping",
+                "targets": [
+                  {
+                    "deliveryOption": {
+                      "handle": "os-std"
+                    }
+                  }
+                ],
+                "value": {
+                  "fixedAmount": {
+                    "amount": 4.99
+                  }
+                }
+              },
+              {
+                "message": "Combined shipping",
+                "targets": [
+                  {
+                    "deliveryOption": {
+                      "handle": "os-ups2"
+                    }
+                  }
+                ],
+                "value": {
+                  "percentage": {
+                    "value": 100
+                  }
+                }
+              }
+            ],
+            "selectionStrategy": "ALL"
+          }
+        }
+      ]
+    }
+  }
+}

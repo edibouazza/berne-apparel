@@ -1,0 +1,114 @@
+{
+  "payload": {
+    "export": "cart-delivery-options-discounts-generate-run",
+    "target": "cart.delivery-options.discounts.generate.run",
+    "input": {
+      "cart": {
+        "buyerIdentity": {
+          "customer": {
+            "hasAnyTag": true
+          }
+        },
+        "deliveryGroups": [
+          {
+            "id": "gid://shopify/CartDeliveryGroup/1",
+            "deliveryAddress": {
+              "countryCode": "US"
+            },
+            "deliveryOptions": [
+              {
+                "handle": "fw-free",
+                "title": "Free Standard Shipping",
+                "cost": {
+                  "amount": "0.0",
+                  "currencyCode": "USD"
+                }
+              },
+              {
+                "handle": "fw-std",
+                "title": "Standard Shipping",
+                "cost": {
+                  "amount": "9.99",
+                  "currencyCode": "USD"
+                }
+              }
+            ],
+            "cartLines": [
+              {
+                "quantity": 1,
+                "merchandise": {
+                  "__typename": "ProductVariant",
+                  "weight": 2,
+                  "weightUnit": "POUNDS",
+                  "requiresShipping": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "discount": {
+        "discountClasses": [
+          "SHIPPING"
+        ],
+        "metafield": {
+          "jsonValue": {
+            "enabled": true,
+            "testMode": true,
+            "testTags": [
+              "combined-shipping-test"
+            ],
+            "message": "Combined shipping",
+            "currency": "USD",
+            "countries": [
+              "US"
+            ],
+            "packagingWeightLb": 0,
+            "standard": {
+              "titles": [
+                "Standard Shipping"
+              ],
+              "bands": [
+                {
+                  "maxLb": 1,
+                  "cents": 499,
+                  "maxInclusive": false
+                },
+                {
+                  "maxLb": 3,
+                  "cents": 999,
+                  "maxInclusive": true
+                },
+                {
+                  "maxLb": 5,
+                  "cents": 1199,
+                  "maxInclusive": true
+                },
+                {
+                  "maxLb": 8,
+                  "cents": 1499,
+                  "maxInclusive": true
+                },
+                {
+                  "maxLb": null,
+                  "cents": 1799
+                }
+              ]
+            },
+            "ups": {
+              "enabled": false,
+              "titles": [
+                "UPS 2nd Day Air®",
+                "UPS 3 Day Select®",
+                "UPS Next Day Air®"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "output": {
+      "operations": []
+    }
+  }
+}

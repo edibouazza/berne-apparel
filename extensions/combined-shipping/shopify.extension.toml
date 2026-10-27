@@ -1,4 +1,4 @@
-api_version = "2026-07"
+api_version = "2026-10"
 
 [[extensions]]
 name = "t:name"
@@ -7,14 +7,12 @@ type = "function"
 uid = "3a4109e7-95ac-21b6-5acf-2e44c3fe2cd3d28a7cf6"
 description = "t:description"
 
-  [[extensions.targeting]]
-  target = "cart.lines.discounts.generate.run"
-  input_query = "src/cart_lines_discounts_generate_run.graphql"
-  export = "cart-lines-discounts-generate-run"
-
+  # Shipping class only. The product/order target from the template was removed.
   [[extensions.targeting]]
   target = "cart.delivery-options.discounts.generate.run"
   input_query = "src/cart_delivery_options_discounts_generate_run.graphql"
+  # Supplies $testTags from the same JSON config metafield the function reads.
+  input_variables = { namespace = "$app:combined-shipping", key = "config" }
   export = "cart-delivery-options-discounts-generate-run"
 
   [extensions.build]
