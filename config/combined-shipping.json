@@ -1,0 +1,24 @@
+{
+  "enabled": true,
+  "testMode": true,
+  "testTags": ["combined-shipping-test"],
+  "dryRun": false,
+  "message": "Combined shipping",
+  "currency": "USD",
+  "countries": ["US"],
+  "packagingWeightLb": 0,
+  "standard": {
+    "titles": ["Standard Shipping"],
+    "bands": [
+      { "maxLb": 1, "cents": 499, "maxInclusive": false },
+      { "maxLb": 3, "cents": 999, "maxInclusive": true },
+      { "maxLb": 5, "cents": 1199, "maxInclusive": true },
+      { "maxLb": 8, "cents": 1499, "maxInclusive": true },
+      { "maxLb": null, "cents": 1799 }
+    ]
+  },
+  "ups": {
+    "enabled": false,
+    "titles": ["UPS 2nd Day Air®", "UPS 3 Day Select®", "UPS Next Day Air®"]
+  }
+}

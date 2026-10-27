@@ -11,7 +11,10 @@
     "dev": "shopify app dev",
     "info": "shopify app info",
     "generate": "shopify app generate",
-    "deploy": "shopify app deploy"
+    "deploy": "shopify app deploy",
+    "test": "npm test --workspace extensions/combined-shipping -- --run",
+    "create-discount": "node scripts/create-discount.mjs",
+    "audit-discounts": "node scripts/audit-discounts.mjs"
   },
   "dependencies": {
     "@shopify/cli": "4.9.4"
