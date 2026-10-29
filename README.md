@@ -170,23 +170,27 @@ npm run audit-discounts
 
 The spike confirms how real carts look before anything applies to customers.
 
-1. Set `"dryRun": true` in the config and push it. The function applies nothing and logs the discounts it would have applied.
-2. As the tagged test customer, check out:
+**Function logs show no input or output on Berne.** Shopify hides a run's details unless the app has the scopes for the data its input reads: `read_customers` (customer tags) and `read_products` (weights). The app only has `write_discounts`. Logs still show whether each run succeeded. With those scopes added, the log-based steps below work, and runs can be saved as fixtures in `extensions/combined-shipping/tests/fixtures/` (see `tests/fixtures/synthetic/` for the format).
+
+On Berne the spike runs at checkout instead, with `dryRun: false` and `testMode: true`, so the discount applies only to tagged testers:
+
+1. As the tagged test customer, check out:
    - Fort Worth only, Ossian only, Fort Worth + Ossian
    - a 3-way cart, if inventory allows
    - any one of them with a UPS service selected
    - a split cart over $100 where each location's share is under $100. Check that `Free Standard Shipping` still appears. If it doesn't, that's native shipping config, not this function.
-3. Pull each run's input from **Dev Dashboard → Berne Combined Shipping → Logs** (or `shopify app logs`). Save them in the fixture format (see `tests/fixtures/synthetic/`) in `extensions/combined-shipping/tests/fixtures/`. `npm test` picks them up automatically.
-4. Confirm from the logged inputs:
-   - whether a split cart has one `deliveryGroup` per location, or one merged group
-   - the exact option titles (`®` placement, carrier prefix) and update `standard.titles` / `ups.titles`
-   - that `weight` and `weightUnit` arrive on every line
-   - that `band(weight)` reproduces each single-location cart's Standard price, including at exactly 1, 3, 5 and 8 lb. If prices are about 0.41 lb off, the Standard Box is in play and `packagingWeightLb` needs adjusting.
-5. UPS is only possible with one delivery group per location and per-group UPS costs. If carts come back as one merged group, leave `ups.enabled: false`.
+2. For each, note the shipments checkout shows, each option's title and price, and the Combined shipping discount. Get each item's weight from the product in the admin.
+3. Confirm:
+   - whether a split cart shows one shipment per location, or one merged shipment
+   - the exact option titles (`®` placement, carrier prefix), and update `standard.titles` / `ups.titles` if they differ
+   - that `band(total weight)` reproduces each single-location cart's Standard price, including at exactly 1, 3, 5 and 8 lb. If prices are about 0.41 lb off, the Standard Box is in play and `packagingWeightLb` needs adjusting.
+   - on split carts, that Standard minus the discount equals the band for the total weight
+   - that no discount appears logged out or as an untagged customer
+4. UPS is only possible with one delivery group per location and per-group UPS costs. Checkout shipments are a strong hint but not proof, so leave `ups.enabled: false` until a run's input can be seen.
 
 ## Going live
 
-1. Set `"dryRun": false` and push. The discount now applies, but only to tagged testers.
+1. Make sure `"dryRun": false` is pushed. The discount applies, but only to tagged testers.
 2. Run the [QA checklist](#manual-qa-checklist) as a tagged customer.
 3. After sign-off, set `"testMode": false` and push with `npm run create-discount -- --go-live`.
 
