@@ -81,7 +81,7 @@ Set `"enabled": false` in the config and run `npm run create-discount`. The func
 
 ## Development
 
-Requires Node 22+ and Shopify CLI 4.9+.
+Requires Node 22.9+ and Shopify CLI 4.9+.
 
 ```bash
 npm install
@@ -116,6 +116,22 @@ Environment:
 - `SHOPIFY_STORE`: the store's `*.myshopify.com` domain.
 - Either `SHOPIFY_ADMIN_TOKEN`: an Admin API access token for this app on the store,
 - or `SHOPIFY_CLIENT_SECRET`: the app's client secret from the Dev Dashboard. The script exchanges it with the client credentials grant. This only works when the store and the app belong to the same organization. `SHOPIFY_CLIENT_ID` defaults to the `client_id` in `shopify.app.toml`.
+
+Berne isn't in the app's organization, so it needs `SHOPIFY_ADMIN_TOKEN`. Get one once with `SHOPIFY_STORE` and `SHOPIFY_CLIENT_SECRET` set:
+
+```bash
+npm run get-token
+```
+
+It prints an authorize URL. Open it signed in to the store admin and approve. The browser lands on a shopify.dev page. Copy the full URL from the address bar and pass it back:
+
+```bash
+npm run get-token -- "<redirected URL>"
+```
+
+The script checks Shopify's signature on the URL, exchanges the code, and saves `SHOPIFY_STORE` and an offline `SHOPIFY_ADMIN_TOKEN` to `.env` (gitignored, other lines kept). The token stays valid until the app is uninstalled. Each code works once, so if the exchange fails, start again from `npm run get-token`.
+
+The npm scripts load `.env` automatically. Variables already set in your shell take precedence.
 
 ```bash
 npm run create-discount -- --dry-run

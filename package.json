@@ -13,8 +13,9 @@
     "generate": "shopify app generate",
     "deploy": "shopify app deploy",
     "test": "npm test --workspace extensions/combined-shipping -- --run",
-    "create-discount": "node scripts/create-discount.mjs",
-    "audit-discounts": "node scripts/audit-discounts.mjs"
+    "create-discount": "node --env-file-if-exists=.env scripts/create-discount.mjs",
+    "audit-discounts": "node --env-file-if-exists=.env scripts/audit-discounts.mjs",
+    "get-token": "node --env-file-if-exists=.env scripts/get-token.mjs"
   },
   "dependencies": {
     "@shopify/cli": "4.9.4"
