@@ -41,12 +41,12 @@ if (!config.testMode && !args["go-live"]) {
 }
 
 const FIND_DISCOUNTS = `#graphql
-  query FindDiscounts($after: String) {
-    automaticDiscountNodes(first: 100, after: $after) {
+  query FindDiscounts($after: String, $query: String) {
+    discountNodes(first: 100, after: $after, query: $query) {
       pageInfo { hasNextPage endCursor }
       nodes {
         id
-        automaticDiscount {
+        discount {
           __typename
           ... on DiscountAutomaticApp {
             title
@@ -90,9 +90,11 @@ async function findExisting(graphql, clientId) {
   const matches = [];
   let after = null;
   do {
-    const { automaticDiscountNodes: page } = await graphql(FIND_DISCOUNTS, { after });
+    // automaticDiscountNodes leaves out app discounts, so search all discounts.
+    // The title search is fuzzy; the exact checks below decide.
+    const { discountNodes: page } = await graphql(FIND_DISCOUNTS, { after, query: `title:"${TITLE}"` });
     for (const node of page.nodes) {
-      const discount = node.automaticDiscount;
+      const discount = node.discount;
       if (
         discount.__typename === "DiscountAutomaticApp" &&
         discount.title === TITLE &&
@@ -119,7 +121,9 @@ console.log(
     ? `Updating ${existing.id} (${existing.status})`
     : `Creating automatic discount "${TITLE}"`,
 );
-console.log(`testMode: ${config.testMode}, enabled: ${config.enabled}, ups.enabled: ${config.ups.enabled}`);
+console.log(
+  `enabled: ${config.enabled}, testMode: ${config.testMode}, dryRun: ${config.dryRun}, ups.enabled: ${config.ups.enabled}`,
+);
 
 if (args["dry-run"]) {
   console.log("Dry run: no changes made.");
