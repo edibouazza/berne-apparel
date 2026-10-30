@@ -3,7 +3,7 @@
   "testMode": true,
   "testTags": ["combined-shipping-test"],
   "dryRun": false,
-  "message": "Combined shipping",
+  "message": "Shipping discount",
   "currency": "USD",
   "countries": ["US"],
   "packagingWeightLb": 0,

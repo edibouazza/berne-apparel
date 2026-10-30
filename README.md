@@ -64,7 +64,7 @@ The config lives in a JSON metafield on the discount: namespace `$app:combined-s
 | `testMode` | `true` → only applies to customers tagged with one of `testTags`. |
 | `testTags` | Customer tags that count as testers. A list, because it feeds the input query's `hasAnyTag(tags:)` argument. |
 | `dryRun` | Optional. `true` → computes discounts and logs them to the function run log, but applies nothing. |
-| `message` | Discount label shown at checkout (`Combined shipping`). |
+| `message` | Discount label shown at checkout (`Shipping discount`). The discount keeps the title `Combined shipping` in the admin, which `create-discount` uses to find it. |
 | `currency` | Every delivery option must be in this currency, or nothing happens. |
 | `countries` | Every delivery address must be in this list, or nothing happens. |
 | `packagingWeightLb` | Added once per cart to the total weight. `0` because the default package (Shipping Bag) is 0 lb. |
