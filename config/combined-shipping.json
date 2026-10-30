@@ -1,6 +1,6 @@
 {
   "enabled": true,
-  "testMode": true,
+  "testMode": false,
   "testTags": ["combined-shipping-test"],
   "dryRun": false,
   "message": "Shipping discount",

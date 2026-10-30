@@ -211,7 +211,7 @@ Shipping rates, profiles and delivery options are never changed, so there's noth
 
 ## Manual QA checklist
 
-Run as a customer tagged `combined-shipping-test` while `testMode` is `true`. For each checkout, note the shipping line, the "Combined shipping" discount, and the total.
+Run as a customer tagged `combined-shipping-test` while `testMode` is `true`. For each checkout, note the shipping line, the "Shipping discount" line, and the total.
 
 **Standard Shipping**
 
